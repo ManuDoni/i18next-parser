@@ -20,7 +20,7 @@ export default class JsxLexer extends JavascriptLexer {
       options.transIdentityFunctionsToIgnore || []
   }
 
-  extract(content, filename = '__default.jsx') {
+  async extract(content, filename = '__default.jsx') {
     const keys = []
 
     const parseCommentNode = this.createCommentNodeParser()

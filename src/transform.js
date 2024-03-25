@@ -89,7 +89,7 @@ export default class i18nTransform extends Transform {
     }
   }
 
-  _transform(file, encoding, done) {
+  async _transform(file, encoding, done) {
     let content
     if (file.isBuffer()) {
       content = file.contents.toString('utf8')
@@ -108,7 +108,7 @@ export default class i18nTransform extends Transform {
     }
 
     const filename = path.basename(file.path)
-    const entries = this.parser.parse(content, filename)
+    const entries = await this.parser.parse(content, filename)
 
     for (const entry of entries) {
       let key = entry.key

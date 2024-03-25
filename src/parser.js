@@ -39,7 +39,7 @@ export default class Parser extends EventEmitter {
     this.lexers = { ...lexers, ...options.lexers }
   }
 
-  parse(content, filename) {
+  async parse(content, filename) {
     let keys = []
     const extension = path.extname(filename).substr(1)
     const lexers = this.lexers[extension] || this.lexers.default
@@ -72,7 +72,7 @@ export default class Parser extends EventEmitter {
 
       const lexer = new Lexer(lexerOptions)
       lexer.on('warning', (warning) => this.emit('warning', warning))
-      keys = keys.concat(lexer.extract(content, filename))
+      keys = keys.concat(await lexer.extract(content, filename))
     }
 
     return keys

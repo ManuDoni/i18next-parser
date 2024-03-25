@@ -64,7 +64,7 @@ export default class JavascriptLexer extends BaseLexer {
     return keys
   }
 
-  extract(content, filename = '__default.js') {
+  async extract(content, filename = '__default.js') {
     const keys = []
 
     const parseCommentNode = this.createCommentNodeParser()
@@ -351,8 +351,8 @@ export default class JavascriptLexer extends BaseLexer {
     }
 
     const keys = []
-    expressions.forEach((expression) => {
-      const expressionKeys = this.extract(expression)
+    expressions.forEach(async (expression) => {
+      const expressionKeys = await this.extract(expression)
       if (expressionKeys) {
         keys.push(...expressionKeys)
       }

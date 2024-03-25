@@ -10,7 +10,7 @@ export default class HandlebarsLexer extends BaseLexer {
     this.createArgumentsRegex()
   }
 
-  extract(content) {
+  async extract(content) {
     let matches
 
     while ((matches = this.functionRegex.exec(content))) {

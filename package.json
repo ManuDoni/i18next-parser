@@ -43,7 +43,9 @@
     "sort-keys": "^5.0.0",
     "typescript": "^5.0.4",
     "vinyl": "~3.0.0",
-    "vinyl-fs": "^4.0.0",
+    "vinyl-fs": "^4.0.0"
+  },
+  "peerDependencies": {
     "vue-template-compiler": "^2.6.11"
   },
   "devDependencies": {
@@ -66,7 +68,8 @@
     "mocha": "^10.0.0",
     "p-event": "^6.0.0",
     "prettier": "3.2.5",
-    "sinon": "^17.0.1"
+    "sinon": "^17.0.1",
+    "vue-template-compiler": "^2.6.11"
   },
   "repository": {
     "type": "git",

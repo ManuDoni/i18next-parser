@@ -9,7 +9,7 @@ export default class HTMLLexer extends BaseLexer {
     this.optionAttr = options.optionAttr || 'data-i18n-options'
   }
 
-  extract(content) {
+  async extract(content) {
     const that = this
     const $ = cheerio.load(content)
     $(`[${that.attr}]`).each((index, node) => {

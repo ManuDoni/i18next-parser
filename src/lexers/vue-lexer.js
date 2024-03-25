@@ -1,4 +1,3 @@
-import VueTemplateCompiler from 'vue-template-compiler'
 import BaseLexer from './base-lexer.js'
 import JavascriptLexer from './javascript-lexer.js'
 
@@ -9,17 +8,25 @@ export default class VueLexer extends BaseLexer {
     this.functions = options.functions || ['$t']
   }
 
-  extract(content, filename) {
+  async extract(content, filename) {
     let keys = []
 
     const Lexer = new JavascriptLexer()
     Lexer.on('warning', (warning) => this.emit('warning', warning))
-    keys = keys.concat(Lexer.extract(content))
+    keys = keys.concat(await Lexer.extract(content))
 
-    const compiledTemplate = VueTemplateCompiler.compile(content).render
-    const Lexer2 = new JavascriptLexer({ functions: this.functions })
-    Lexer2.on('warning', (warning) => this.emit('warning', warning))
-    keys = keys.concat(Lexer2.extract(compiledTemplate))
+    // Dynamically import 'vue-template-compiler'
+    try {
+      const VueTemplateCompiler = await import('vue-template-compiler')
+      const compiledTemplate = VueTemplateCompiler.compile(content).render
+      const Lexer2 = new JavascriptLexer({ functions: this.functions })
+      Lexer2.on('warning', (warning) => this.emit('warning', warning))
+      keys = keys.concat(await Lexer2.extract(compiledTemplate))
+    } catch (error) {
+      throw new Error(
+        'vue-template-compiler module is not found. Please ensure it is installed as a peer dependency.'
+      )
+    }
 
     return keys
   }
